@@ -2,30 +2,37 @@ import SwiftUI
 
 enum Difficulty: String, CaseIterable {
   case easy
+  case medium
   case hard
 
   var columnCount: Int {
     switch self {
     case .easy:
-      return 7
+      return 9
+    case .medium:
+      return 16
     case .hard:
-      return 18
+      return 30
     }
   }
 
   var rowCount: Int {
     switch self {
     case .easy:
-      return 10
+      return 9
+    case .medium:
+      return 16
     case .hard:
-      return 27
+      return 16
     }
   }
 
   var numberOfMines: Int {
     switch self {
     case .easy:
-      return 8
+      return 10
+    case .medium:
+      return 40
     case .hard:
       return 99
     }
@@ -188,6 +195,10 @@ struct GridView: View {
             )
             .onTapGesture {
               guard isRevealed == false else {
+                return
+              }
+              if let index = flaggedTiles.firstIndex(of: number) {
+                flaggedTiles.remove(at: index)
                 return
               }
               selectedTiles.append(number)

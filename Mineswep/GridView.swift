@@ -174,60 +174,58 @@ struct GridView: View {
 
   var body: some View {
     ScrollView([.horizontal, .vertical]) {
-      ScrollView(.horizontal) {
-        HStack {
-          let columns = Array(repeating: GridItem(.fixed(44), spacing: 0), count: game.difficulty.columnCount)
-          LazyVGrid(columns: columns, spacing: 0) {
-            ForEach((0..<game.difficulty.numberOfTiles), id: \.self) { number in
-              let touchingMines = game.difficulty.touchingMineTiles(for: number, mines: mines)
-              let isMine = mines.contains(number)
-              let isRevealed = selectedTiles.contains(number)
-              let isFlagged = flaggedTiles.contains(number)
-              Tile(
-                touchingMines: touchingMines,
-                isMine: isMine,
-                isRevealed: isRevealed,
-                isFlagged: isFlagged
-              )
-              .onTapGesture {
+      HStack {
+        let columns = Array(repeating: GridItem(.fixed(44), spacing: 0), count: game.difficulty.columnCount)
+        LazyVGrid(columns: columns, spacing: 0) {
+          ForEach((0..<game.difficulty.numberOfTiles), id: \.self) { number in
+            let touchingMines = game.difficulty.touchingMineTiles(for: number, mines: mines)
+            let isMine = mines.contains(number)
+            let isRevealed = selectedTiles.contains(number)
+            let isFlagged = flaggedTiles.contains(number)
+            Tile(
+              touchingMines: touchingMines,
+              isMine: isMine,
+              isRevealed: isRevealed,
+              isFlagged: isFlagged
+            )
+            .onTapGesture {
+              guard isRevealed == false else {
+                return
+              }
+              withAnimation {
+                selectedTiles.append(number)
+              }
+              guard isMine == false else {
+                hasSelectedMine = true
+                return
+              }
+              recursiveZeroSelection(number: number)
+              if selectedTiles.count == difficulty.numberOfTiles - difficulty.numberOfMines {
+                hasWonGame = true
+              }
+            }
+            .onLongPressGesture {
+              if let index = flaggedTiles.firstIndex(of: number) {
+                flaggedTiles.remove(at: index)
+              } else {
                 guard isRevealed == false else {
                   return
                 }
                 withAnimation {
-                  selectedTiles.append(number)
-                }
-                guard isMine == false else {
-                  hasSelectedMine = true
-                  return
-                }
-                recursiveZeroSelection(number: number)
-                if selectedTiles.count == difficulty.numberOfTiles - difficulty.numberOfMines {
-                  hasWonGame = true
-                }
-              }
-              .onLongPressGesture {
-                if let index = flaggedTiles.firstIndex(of: number) {
-                  flaggedTiles.remove(at: index)
-                } else {
-                  guard isRevealed == false else {
-                    return
-                  }
-                  withAnimation {
-                    flaggedTiles.append(number)
-                  }
+                  flaggedTiles.append(number)
                 }
               }
             }
           }
-          .border(.secondary, width: 2)
         }
-        .padding()
-        .alert("Game Over", isPresented: $hasSelectedMine) {
-          Button("Restart", action: resetGame)
-        }
-        .alert("You win", isPresented: $hasWonGame) {
-          Button("Restart", action: resetGame)
-        }
+        .border(.secondary, width: 2)
+      }
+      .padding()
+      .alert("Game Over", isPresented: $hasSelectedMine) {
+        Button("Restart", action: resetGame)
+      }
+      .alert("You win", isPresented: $hasWonGame) {
+        Button("Restart", action: resetGame)
       }
     }
   }

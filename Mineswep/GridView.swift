@@ -209,6 +209,9 @@ struct GridView: View {
                 if let index = flaggedTiles.firstIndex(of: number) {
                   flaggedTiles.remove(at: index)
                 } else {
+                  guard isRevealed == false else {
+                    return
+                  }
                   withAnimation {
                     flaggedTiles.append(number)
                   }

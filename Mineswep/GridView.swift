@@ -164,9 +164,7 @@ struct GridView: View {
         guard selectedTiles.contains(number) == false else {
           return
         }
-        withAnimation {
-          selectedTiles.append(number)
-        }
+        selectedTiles.append(number)
         recursiveZeroSelection(number: number)
       }
     }
@@ -192,9 +190,7 @@ struct GridView: View {
               guard isRevealed == false else {
                 return
               }
-              withAnimation {
-                selectedTiles.append(number)
-              }
+              selectedTiles.append(number)
               guard isMine == false else {
                 hasSelectedMine = true
                 return

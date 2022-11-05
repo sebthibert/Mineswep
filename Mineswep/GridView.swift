@@ -42,77 +42,74 @@ enum Difficulty: String, CaseIterable {
   }
 
   func touchingTiles(for tile: Int) -> [Int] {
-//    switch self {
-//    case .hard:
-      if tile == 0 { // first row first column
-        return [
-          tile + 1,
-          columnCount,
-          columnCount + 1
-        ]
-      } else if tile == columnCount - 1 { // first row last column
-        return [
-          tile - 1,
-          tile + columnCount - 1,
-          tile + columnCount
-        ]
-      } else if tile == columnCount * (rowCount - 1) { // last row first column
-        return [
-          tile + 1,
-          tile - columnCount,
-          tile - columnCount - 1
-        ]
-      } else if tile == numberOfTiles - 1 { // last row last column
-        return [
-          tile - 1,
-          tile - columnCount,
-          tile - columnCount - 1
-        ]
-      } else if tile < columnCount { // first row middle columns
-        return [
-          tile - 1,
-          tile + 1,
-          tile + columnCount - 1,
-          tile + columnCount,
-          tile + columnCount + 1
-        ]
-      } else if tile % columnCount == 0 { // first column middle rows
-        return [
-          tile - columnCount,
-          tile - columnCount + 1,
-          tile + 1,
-          tile + columnCount + 1,
-          tile + columnCount
-        ]
-      } else if tile % columnCount == columnCount - 1 { // last column middle rows
-        return [
-          tile - columnCount,
-          tile - columnCount - 1,
-          tile - 1,
-          tile + columnCount - 1,
-          tile + columnCount
-        ]
-      } else if tile > ((rowCount - 1) * columnCount) { // last row middle columns
-        return [
-          tile - 1,
-          tile - columnCount - 1,
-          tile - columnCount,
-          tile - columnCount + 1,
-          tile + 1
-        ]
-      } else { // middles
-        return [
-          tile - columnCount - 1,
-          tile - columnCount,
-          tile - columnCount + 1,
-          tile + 1,
-          tile + columnCount + 1,
-          tile + columnCount,
-          tile + columnCount - 1,
-          tile - 1
-        ]
-      }
-//    }
+    if tile == 0 { // first row first column
+      return [
+        tile + 1,
+        columnCount,
+        columnCount + 1
+      ]
+    } else if tile == columnCount - 1 { // first row last column
+      return [
+        tile - 1,
+        tile + columnCount - 1,
+        tile + columnCount
+      ]
+    } else if tile == columnCount * (rowCount - 1) { // last row first column
+      return [
+        tile + 1,
+        tile - columnCount,
+        tile - columnCount - 1
+      ]
+    } else if tile == numberOfTiles - 1 { // last row last column
+      return [
+        tile - 1,
+        tile - columnCount,
+        tile - columnCount - 1
+      ]
+    } else if tile < columnCount { // first row middle columns
+      return [
+        tile - 1,
+        tile + 1,
+        tile + columnCount - 1,
+        tile + columnCount,
+        tile + columnCount + 1
+      ]
+    } else if tile % columnCount == 0 { // first column middle rows
+      return [
+        tile - columnCount,
+        tile - columnCount + 1,
+        tile + 1,
+        tile + columnCount + 1,
+        tile + columnCount
+      ]
+    } else if tile % columnCount == columnCount - 1 { // last column middle rows
+      return [
+        tile - columnCount,
+        tile - columnCount - 1,
+        tile - 1,
+        tile + columnCount - 1,
+        tile + columnCount
+      ]
+    } else if tile > ((rowCount - 1) * columnCount) { // last row middle columns
+      return [
+        tile - 1,
+        tile - columnCount - 1,
+        tile - columnCount,
+        tile - columnCount + 1,
+        tile + 1
+      ]
+    } else { // middles
+      return [
+        tile - columnCount - 1,
+        tile - columnCount,
+        tile - columnCount + 1,
+        tile + 1,
+        tile + columnCount + 1,
+        tile + columnCount,
+        tile + columnCount - 1,
+        tile - 1
+      ]
+    }
   }
 }
 
@@ -192,33 +189,31 @@ struct GridView: View {
                 isRevealed: isRevealed,
                 isFlagged: isFlagged
               )
-                .onTapGesture {
-                  guard isRevealed == false else {
-                    return
-                  }
+              .onTapGesture {
+                guard isRevealed == false else {
+                  return
+                }
+                withAnimation {
+                  selectedTiles.append(number)
+                }
+                guard isMine == false else {
+                  hasSelectedMine = true
+                  return
+                }
+                recursiveZeroSelection(number: number)
+                if selectedTiles.count == difficulty.numberOfTiles - difficulty.numberOfMines {
+                  hasWonGame = true
+                }
+              }
+              .onLongPressGesture {
+                if let index = flaggedTiles.firstIndex(of: number) {
+                  flaggedTiles.remove(at: index)
+                } else {
                   withAnimation {
-                    selectedTiles.append(number)
-                  }
-                  guard isMine == false else {
-                    hasSelectedMine = true
-                    return
-                  }
-                  recursiveZeroSelection(number: number)
-                  if selectedTiles.count == difficulty.numberOfTiles - difficulty.numberOfMines {
-                    hasWonGame = true
+                    flaggedTiles.append(number)
                   }
                 }
-                .onLongPressGesture(perform: {
-                  if let index = flaggedTiles.firstIndex(of: number) {
-                    flaggedTiles.remove(at: index)
-                  } else {
-                    withAnimation {
-                      flaggedTiles.append(number)
-                    }
-                  }
-                }) { pressing in
-                  print(pressing)
-                }
+              }
             }
           }
           .border(.secondary, width: 2)

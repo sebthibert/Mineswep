@@ -3,7 +3,7 @@ import SwiftUI
 @main
 struct MineswepApp: App {
   @State var isSettingsPresented = false
-  @State var difficulty: Difficulty = .easy
+  @State var difficulty: Difficulty = .hard
 
   var body: some Scene {
     WindowGroup {

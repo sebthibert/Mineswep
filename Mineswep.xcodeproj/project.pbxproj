@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		F2F52B892916627F0030C639 /* MineswepApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F52B882916627F0030C639 /* MineswepApp.swift */; };
-		F2F52B8B2916627F0030C639 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F52B8A2916627F0030C639 /* ContentView.swift */; };
+		F2F52B8B2916627F0030C639 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F52B8A2916627F0030C639 /* GridView.swift */; };
 		F2F52B8D291662800030C639 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F2F52B8C291662800030C639 /* Assets.xcassets */; };
 		F2F52B90291662800030C639 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F2F52B8F291662800030C639 /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -16,7 +16,7 @@
 /* Begin PBXFileReference section */
 		F2F52B852916627F0030C639 /* Mineswep.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mineswep.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2F52B882916627F0030C639 /* MineswepApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MineswepApp.swift; sourceTree = "<group>"; };
-		F2F52B8A2916627F0030C639 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		F2F52B8A2916627F0030C639 /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
 		F2F52B8C291662800030C639 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F2F52B8F291662800030C639 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -52,7 +52,7 @@
 			isa = PBXGroup;
 			children = (
 				F2F52B882916627F0030C639 /* MineswepApp.swift */,
-				F2F52B8A2916627F0030C639 /* ContentView.swift */,
+				F2F52B8A2916627F0030C639 /* GridView.swift */,
 				F2F52B8C291662800030C639 /* Assets.xcassets */,
 				F2F52B8E291662800030C639 /* Preview Content */,
 			);
@@ -137,7 +137,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F2F52B8B2916627F0030C639 /* ContentView.swift in Sources */,
+				F2F52B8B2916627F0030C639 /* GridView.swift in Sources */,
 				F2F52B892916627F0030C639 /* MineswepApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

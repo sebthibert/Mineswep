@@ -1,6 +1,6 @@
 import SwiftUI
 
-enum Difficulty {
+enum Difficulty: String, CaseIterable {
   case easy
   case hard
 
